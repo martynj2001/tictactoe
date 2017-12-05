@@ -1,8 +1,6 @@
 # Game Class - an instance represents the Game.
-
-Class Game
-{
-	attr_accessor :player_1 :player_2 :board
+class Game
+	attr_accessor :player_1, :player_2, :board
 
 	def initialize(player_1, player_2)
 		@player_1 = player_1
@@ -16,18 +14,69 @@ Class Game
 		puts "#{player} is the winner!" if winner
 	end
 
+	def print_board
+		puts board
+	end
+
 	def display_board
-		#display the board
+		# Display the board
+		##
+		#  1 | 2 | 3
+		# -----------
+		#  4 | 5 | 6
+		# -----------
+		#  7 | 8 | 9
+		##
+
+		top = [1,2,3]
+		middle = [4,5,6]
+		bottom = [7,8,9]
+
+		top.each do |p|
+			if @board.key?(p)
+				print " #{@board[p]}"
+				print " |"
+			else
+				print "  "
+				print " | "
+			end
+		end
+		puts
+		puts "------------------"
+		middle.each do |p|
+			if @board.key?(p)
+				print " #{@board[p]}"
+				print " |"
+			else
+				print "  "
+				print " | "
+			end
+		end
+		puts
+		puts "------------------"
+		bottom.each do |p|
+			if @board.key?(p)
+				print " #{@board[p]}"
+				print " |"
+			else
+				print "  "
+				print " | "
+			end
+		end
+		puts
 	end
 	
 	def player_move (player, location)
 		#Check move is legal - no player already their
-		mov = true
-		@board.each do {|loc| mov = false if @board[loc] != nil}
-		#add players move to the board
-		if mov do
-			@board[location] = player
+		if @board.key?(location)
+			puts "#{player.name} has already pinched that spot, try again: "
+			location = gets.chomp.to_i
+			@board[location] = player.type
+		else
+			@board[location] = player.type
 		end
+		display_board
 	end
+end
 
-}
+
