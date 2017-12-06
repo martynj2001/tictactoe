@@ -67,13 +67,16 @@ class Game
 	end
 	
 	def player_move (player, location)
-		#Check move is legal - no player already their
-		if @board.key?(location)
-			puts "#{player.name} has already pinched that spot, try again: "
-			location = gets.chomp.to_i
-			@board[location] = player.type
-		else
-			@board[location] = player.type
+		#Check move is legal - no player already there
+		good_move = false
+		while (good_move == false)
+			if @board.key?(location)
+				print "#{player.name} has already pinched that spot, try again: "
+				location = gets.chomp.to_i
+			else
+				@board[location] = player.type
+				good_move = true
+			end
 		end
 		display_board
 	end
