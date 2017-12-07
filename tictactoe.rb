@@ -7,6 +7,7 @@ puts "XXXXXXXX TICTACTOE OOOOOOOOOO"
 puts "-----------------------------"
 puts "--------- Martyn J ----------"
 puts "-----------------------------"
+puts
 
 #puts 'Player 1, enter your name: '
 #p1_name = gets.chomp 
