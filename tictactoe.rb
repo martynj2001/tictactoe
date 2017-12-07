@@ -19,15 +19,13 @@ p1 = Player.new("Bob", "0")
 p2 = Player.new("Bill", "X")
 
 game = Game.new(p1, p2)
-winner = false
 
-while (not winner)
+while (not game.winner)
 	puts " Player 1 move: "
 	loc = gets.chomp.to_i
 	game.player_move(p1, loc)
 	puts " Player 2 move: "
 	loc = gets.chomp.to_i
 	game.player_move(p2, loc)
-	winner = game.is_winner?
 end
 

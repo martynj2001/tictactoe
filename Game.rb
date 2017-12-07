@@ -102,11 +102,6 @@ class Game
 			end
 		end
 		
-		case places.
-		
-		
-		
-		end
 	end
 	
 	
