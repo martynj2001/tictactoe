@@ -20,7 +20,7 @@ p2 = Player.new("Bill", "X")
 
 game = Game.new(p1, p2)
 
-while (not game.winner)
+while (not game.game_won)
 	puts " Player 1 move: "
 	loc = gets.chomp.to_i
 	game.player_move(p1, loc)
@@ -29,3 +29,4 @@ while (not game.winner)
 	game.player_move(p2, loc)
 end
 
+puts “#{game.winnner} has won the game”
