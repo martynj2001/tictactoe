@@ -1,12 +1,13 @@
 # Game Class - an instance represents the Game.
 class Game
-	attr_accessor :player_1, :player_2, :board, :winner
+	attr_accessor :player_1, :player_2, :board, :winner, :game_won
 
 	def initialize(player_1, player_2)
 		@player_1 = player_1
 		@player_2 = player_2
 		@board = {}
-		@winner = false
+		@game_won = false
+		@winner = nil
 	end
 
 	def print_board
@@ -80,9 +81,9 @@ class Game
 	
 	def is_winner?
 		if check_winner(@player_1) || check_winner(@player_2)
-			@winner = true
+			@game_won = true
 		else
-			@winner = false		
+			@game_won = false		
 		end
 		
 		# Check @player_1 and @player_2 seperately (maybe new class method)
@@ -95,6 +96,7 @@ class Game
 	def check_winner?(player)
 		# Code to check for winner
 		# Check the board for winning combinations
+		
 		places = []
 		@board.each do |loc, type|
 			if type = player.type
@@ -102,6 +104,40 @@ class Game
 			end
 		end
 		
+		return false if places.length < 3
+		
+		places.combination(3) do |a|
+			a.permutation do |p|
+				case  p
+					when [1,2,3] then
+						return true
+						@winner = player.name
+					when [4,5,6] then
+						return true
+						@winner = player.name
+					when [7,8,9] then
+						return true
+						@winner = player.name
+					when [1,4,7] then
+						return true
+						@winner = player.name
+					when [2,5,8] then
+						return true
+						@winner = player.name
+					when [3,6,9] then
+						return true
+						@winner = player.name
+					when [1,5,9] then
+						return true
+						@winner = player.name
+					when [7,5,3] then
+						return true
+						@winner = player.name
+					else
+						return false
+				end
+			end
+		end
 	end
 	
 	
