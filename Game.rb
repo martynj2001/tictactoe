@@ -16,15 +16,21 @@ class Game
 
 	
 	def player_move (player, location)
-		#Check move is legal - no player already there
+
+		#Check move is legal - not greater than 9 and no player already there
 		good_move = false
 		while (good_move == false)
-			if @board.key?(location)
-				print "#{player.name} has already pinched that spot, try again: "
-				location = gets.chomp.to_i
+			if location.between?(1,10)
+				if @board.key?(location)
+					print "#{player.name} has already pinched that spot, try again: "
+					location = gets.chomp.to_i
+				else
+					@board[location] = player.type
+					good_move = true
+				end
 			else
-				@board[location] = player.type
-				good_move = true
+				print "Not a valid place - must be between 1 - 9 and not already occupied, try again: "
+				location = gets.chomp.to_i
 			end
 		end
 		display_board
@@ -80,69 +86,43 @@ class Game
 	end
 	
 	def is_winner?
-		if check_winner(@player_1) || check_winner(@player_2)
+		if check_winner?(@player_1) || check_winner?(@player_2)
 			@game_won = true
 		else
 			@game_won = false		
 		end
-		
-		# Check @player_1 and @player_2 seperately (maybe new class method)
-		# Make array of locations for all @player_1 hash keys
-		# Use case statement to check array for any winning combinations (there are 8)
-		# 123,456,789 147,258,369 159,753
-		
 	end
 	
 	def check_winner?(player)
-		# Code to check for winner
-		# Check the board for winning combinations
-		
 		places = []
 		@board.each do |loc, type|
-			if type = player.type
+			if type == player.type
 				places << loc
 			end
 		end
-		
+
 		return false if places.length < 3
-		
-		places.combination(3) do |a|
-			a.permutation do |p|
-				case  p
-					when [1,2,3] then
-						return true
-						@winner = player.name
-					when [4,5,6] then
-						return true
-						@winner = player.name
-					when [7,8,9] then
-						return true
-						@winner = player.name
-					when [1,4,7] then
-						return true
-						@winner = player.name
-					when [2,5,8] then
-						return true
-						@winner = player.name
-					when [3,6,9] then
-						return true
-						@winner = player.name
-					when [1,5,9] then
-						return true
-						@winner = player.name
-					when [7,5,3] then
-						return true
-						@winner = player.name
-					else
-						return false
-				end
-			end
+
+		puts "places - #{places}"
+
+		if places.include?([1,2,3]) #|| places.include?(4 && 5 && 6) || places.include?(7 && 8 && 9)
+			@winner = player.name
+			puts " #{player.name} - row"
+			return true
+		elsif places.include?(1 && 4 && 7) || places.include?(2 && 6 && 8) || places.include?(3 && 7 && 9)
+			@winner = player.name
+			puts " #{player.name} - column"
+			return true
+		elsif places.include?(1 && 5 && 9) || places.include?(7 && 5 && 3)
+			@winner = player.name
+			puts " #{player.name} - diagonal"
+			return true	
+		else
+			return false
 		end
 	end
 	
-	
 	private :display_board, :is_winner?, :check_winner?
-	
 end
 
 
