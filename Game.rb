@@ -1,6 +1,10 @@
 # Game Class - an instance represents the Game.
 class Game
 	attr_accessor :player_1, :player_2, :board, :winner, :game_won
+	
+	@@winning_rows = [[1,2,3],[4,5,6],[7,8,9]]
+	@@winning_cols = [[1,4,7],[2,5,8],[3,6,9]]
+	@@winning_digs = [[1,5,9],[3,5,6]]
 
 	def initialize(player_1, player_2)
 		@player_1 = player_1
@@ -94,32 +98,28 @@ class Game
 	end
 	
 	def check_winner?(player)
-		places = []
+		
+		#get player types for each location held in winning_combos_row[]
+		winners_r, winners_c, winners_d = []
 		@board.each do |loc, type|
-			if type == player.type
-				places << loc
+			#Check if in row
+			@@winning_rows.each do |row|
+				row.each {|p| winners_r[row[p]] << player.type if p == loc}	
+			end
+			@@winning_cols.each do |col|
+				col.each {|p| winners_c[col[p] << player.type if p == loc}
+			end
+			@@winning_digs.each do |dig|
+				dig.each {|p| winners_d[dig[p] << player.type if p == loc}
 			end
 		end
-
-		return false if places.length < 3
-
-		puts "places - #{places}"
-
-		if places.include?([1,2,3]) #|| places.include?(4 && 5 && 6) || places.include?(7 && 8 && 9)
-			@winner = player.name
-			puts " #{player.name} - row"
-			return true
-		elsif places.include?(1 && 4 && 7) || places.include?(2 && 6 && 8) || places.include?(3 && 7 && 9)
-			@winner = player.name
-			puts " #{player.name} - column"
-			return true
-		elsif places.include?(1 && 5 && 9) || places.include?(7 && 5 && 3)
-			@winner = player.name
-			puts " #{player.name} - diagonal"
-			return true	
-		else
-			return false
-		end
+		
+		#Check for winners
+		3.times{p_type << player.type}
+		#Rows
+		
+		
+		
 	end
 	
 	private :display_board, :is_winner?, :check_winner?
