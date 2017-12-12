@@ -117,8 +117,11 @@ class Game
 		#Check for winners
 		3.times{p_type << player.type}
 		#Rows
-		
-		
+		@@winning_rows.each {|r| r == p_type ? @game_won = true : @game_won = false}
+		#Columns
+		@@winning_cols.each {|c| c == p_type ? @game_won = true : @game_won = false}
+		#Diagonals
+		@@winning_digs.each {|d| d == p_type ? @game_won = true : @game_won = false}
 		
 	end
 	
