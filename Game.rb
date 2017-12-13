@@ -117,12 +117,26 @@ class Game
 		#Check for winners
 		3.times{p_type << player.type}
 		#Rows
-		@@winning_rows.each {|r| r == p_type ? @game_won = true : @game_won = false}
+		@@winning_rows.each do |r|
+			if r == p_type
+				 @winner = player.name
+				 return true
+			end
+		end
 		#Columns
-		@@winning_cols.each {|c| c == p_type ? @game_won = true : @game_won = false}
+		@@winning_cols.each do |c|
+			if c == p_type
+				@winner = player.name
+				return true
+			end
+		end
 		#Diagonals
-		@@winning_digs.each {|d| d == p_type ? @game_won = true : @game_won = false}
-		
+		@@winning_digs.each do |d|
+			if d == p_type
+				@winner = player.name
+				return true
+			end
+		end
 	end
 	
 	private :display_board, :is_winner?, :check_winner?
