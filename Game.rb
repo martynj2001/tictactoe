@@ -107,10 +107,10 @@ class Game
 				row.each {|p| winners_r[row[p]] << player.type if p == loc}	
 			end
 			@@winning_cols.each do |col|
-				col.each {|p| winners_c[col[p] << player.type if p == loc}
+				col.each {|p| winners_c[col[p]] << player.type if p == loc}
 			end
 			@@winning_digs.each do |dig|
-				dig.each {|p| winners_d[dig[p] << player.type if p == loc}
+				dig.each {|p| winners_d[dig[p]] << player.type if p == loc}
 			end
 		end
 		
