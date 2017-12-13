@@ -100,7 +100,10 @@ class Game
 	def check_winner?(player)
 		
 		#get player types for each location held in winning_combos_row[]
-		winners_r, winners_c, winners_d = []
+		winners_r = []
+		winners_c = []
+		winners_d = []
+		
 		@board.each do |loc, type|
 			#Check if in row
 			@@winning_rows.each do |row|
