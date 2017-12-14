@@ -1,7 +1,7 @@
 # Game Class - an instance represents the Game.
 class Game
 	attr_accessor :player_1, :player_2, :board, :winner, :game_won
-	
+
 	@@winning_rows = [[1,2,3],[4,5,6],[7,8,9]]
 	@@winning_cols = [[1,4,7],[2,5,8],[3,6,9]]
 	@@winning_digs = [[1,5,9],[3,5,6]]
@@ -18,7 +18,7 @@ class Game
 		puts board
 	end
 
-	
+
 	def player_move (player, location)
 
 		#Check move is legal - not greater than 9 and no player already there
@@ -40,7 +40,7 @@ class Game
 		display_board
 		is_winner?
 	end
-	
+
 	def display_board
 		# Display the board
 		##
@@ -88,65 +88,42 @@ class Game
 		end
 		puts
 	end
-	
+
 	def is_winner?
-		if check_winner?(@player_1) || check_winner?(@player_2)
+		if check_winner?(@player_1)
 			@game_won = true
+			@winner = @player_1.name
+		elsif check_winner?(@player_2)
+			@game_won = true
+			@winner = @player_2.name
 		else
-			@game_won = false		
+			@game_won = false
 		end
 	end
-	
+
 	def check_winner?(player)
-		
 		#get player types for each location held in winning_combos_row[]
-		winners_r = []
-		winners_c = []
-		winners_d = []
-		
+		winners_r = @@winning_rows
+		winners_c = @@winning_cols
+		winners_d = @@winning_digs
+
+		puts "Checking if #{player.name}, playing #{player.type} has won"
 		@board.each do |loc, type|
-			# Check if in row
-			# Check if the locations in @board are in either of the winning combo array
-			# (check ifthe p[ayer has a poece in any of the winning locations)
-			# Build a nested array that mirrors the winning combos array using player.type if thay have it or 1 if not.
-			# Then check thios array agaionst [player.type, player.type, player.type] to see of thay have won. 
-			@@winning_rows.each do |row|
-				row.each {|p| winners_r[p] << player.type if p == loc}	
-			end
-			@@winning_cols.each do |col|
-				col.each {|p| winners_c[col[p]] << player.type if p == loc}
-			end
-			@@winning_digs.each do |dig|
-				dig.each {|p| winners_d[dig[p]] << player.type if p == loc}
+			if type == player.type
+				winners_r.each {|r| r.map!{|p| p == loc ? player.type : p} }
+				winners_c.each {|c| c.map!{|p| p == loc ? player.type : p} }
+				winners_d.each {|d| d.map!{|p| p == loc ? player.type : p} }
 			end
 		end
-		
 		#Check for winners
-		3.times{p_type << player.type}
-		#Rows
-		@@winning_rows.each do |r|
-			if r == p_type
-				 @winner = player.name
-				 return true
-			end
-		end
-		#Columns
-		@@winning_cols.each do |c|
-			if c == p_type
-				@winner = player.name
-				return true
-			end
-		end
-		#Diagonals
-		@@winning_digs.each do |d|
-			if d == p_type
-				@winner = player.name
-				return true
-			end
-		end
+		p_type = []
+		3.times{ p_type << player.type }
+		winners_r.each {|r| return true if r == p_type }
+		winners_c.each {|c| return true if c == p_type }
+		winners_d.each {|d| return true if d == p_type }
+		# Still here? No winner
+		return false
 	end
-	
+
 	private :display_board, :is_winner?, :check_winner?
 end
-
-

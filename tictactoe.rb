@@ -16,9 +16,9 @@ puts  " 7 | 8 | 9 "
 puts
 
 puts 'Player 1, enter your name: '
-p1_name = gets.chomp 
+p1_name = gets.chomp
 puts 'Player 2, enter your name: '
-p2_name = gets.chomp 
+p2_name = gets.chomp
 
 Player = Struct.new(:name, :type)
 p1 = Player.new(p1_name, "0")
@@ -26,7 +26,7 @@ p2 = Player.new(p2_name, "X")
 
 game = Game.new(p1, p2)
 
-while (not game.game_won)
+while (game.game_won == false)
 	puts "#{p1.name} move: "
 	loc = gets.chomp.to_i
 	game.player_move(p1, loc)
