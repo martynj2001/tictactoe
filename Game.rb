@@ -105,9 +105,13 @@ class Game
 		winners_d = []
 		
 		@board.each do |loc, type|
-			#Check if in row
+			# Check if in row
+			# Check if the locations in @board are in either of the winning combo array
+			# (check ifthe p[ayer has a poece in any of the winning locations)
+			# Build a nested array that mirrors the winning combos array using player.type if thay have it or 1 if not.
+			# Then check thios array agaionst [player.type, player.type, player.type] to see of thay have won. 
 			@@winning_rows.each do |row|
-				row.each {|p| winners_r[row[p]] << player.type if p == loc}	
+				row.each {|p| winners_r[p] << player.type if p == loc}	
 			end
 			@@winning_cols.each do |col|
 				col.each {|p| winners_c[col[p]] << player.type if p == loc}
